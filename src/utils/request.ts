@@ -16,7 +16,7 @@ const baseURL = process.env.VUE_APP_URL;
 // 创建axios实例
 const service = axios.default.create({
   baseURL,
-  timeout: 1000,  // 请求超时时间
+  timeout: 5000,  // 请求超时时间
   maxContentLength: 4000
 })
 

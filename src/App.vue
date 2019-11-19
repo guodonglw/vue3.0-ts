@@ -2,14 +2,17 @@
   <div id="app">
     <div id="nav">
       <van-row type="flex" justify="space-around">
-        <van-col span="8">
-          <div class="routeItem"><router-link to="/">商品</router-link></div>
+        <van-col span="6">
+          <van-button round size="small" class="routeItem" @click="item = ''">主页</van-button>
         </van-col>
-        <van-col span="8">
-          <div class="routeItem"><router-link to="/user">用户</router-link></div>
+        <van-col span="6">
+          <van-button round size="small" class="routeItem" @click="item = 'product'">商品</van-button>
         </van-col>
-        <van-col span="8">
-          <div class="routeItem"><router-link to="/shop">购物车</router-link></div>
+        <van-col span="6">
+          <van-button round size="small" class="routeItem" @click="item = 'shop'">购物车</van-button>
+        </van-col>
+        <van-col span="6">
+          <van-button round size="small" class="routeItem" icon="manager-o" @click="item = 'user'">我</van-button>
         </van-col>
       </van-row>
     </div>
@@ -25,6 +28,18 @@ export default {
     [Row.name]: Row,
     [Col.name]: Col,
     [Button.name]: Button
+  },
+
+  data() {
+    return {
+      item: 'main'
+    }
+  },
+
+  watch: {
+    item: function(val) {
+      this.$router.push('/' + val)
+    }
   }
 }
 </script>
@@ -44,25 +59,19 @@ export default {
   position: fixed;
   z-index: 1;
 
-  a {
-    padding: 5px 20px;
-    background-image: linear-gradient(to right,#4bb0ff, #6149f6);
-    border-radius: 10px;
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color:aqua
-    }
+  button:focus {
+    color: yellow
   }
 
   .routeItem {
-    margin: 10px 0;
+    margin: 10px;
+    color: white;
+    background-image: linear-gradient(to right, #4bb0ff, #6149f6)
   }
 }
 
 .content {
-  margin-top: 40px;
+  margin-top: 50px;
   
 }
 
