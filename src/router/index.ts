@@ -7,7 +7,7 @@ import Home from "../views/Home/index.vue"
  */
 const routerPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location: RawLocation) {
-  return routerPush.call(this, location).catch((error: any)=> error)
+  return (<any>(routerPush.call(this, location))).catch((error: any)=> error)
 }
 
 Vue.use(VueRouter);

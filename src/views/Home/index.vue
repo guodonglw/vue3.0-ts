@@ -84,6 +84,7 @@ export default {
     img {
       width: 100%;
       display: block;
+      border-radius: 20px
     }
   };
 

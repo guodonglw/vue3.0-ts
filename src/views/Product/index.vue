@@ -41,7 +41,7 @@
       <van-goods-action-button type="warning" @click="addShop">
         加入购物车
       </van-goods-action-button>
-      <van-goods-action-button type="danger" @click="sorry">
+      <van-goods-action-button type="danger" @click="nowShop">
         立即购买
       </van-goods-action-button>
     </van-goods-action>
@@ -110,6 +110,10 @@ export default {
         this.res.push(this.good)
       }
       this.UpdateShop(this.res)
+    },
+    nowShop() {
+      this.addShop(),
+      this.onClickCart()
     },
     formatPrice() {
       return "¥ " + (this.good.price / 100).toFixed(2);
