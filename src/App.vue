@@ -1,45 +1,63 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <van-row type="flex" justify="space-around">
-        <van-col span="6">
-          <van-button round size="small" class="routeItem" @click="item = ''">主页</van-button>
-        </van-col>
-        <van-col span="6">
-          <van-button round size="small" class="routeItem" @click="item = 'product'">商品</van-button>
-        </van-col>
-        <van-col span="6">
-          <van-button round size="small" class="routeItem" @click="item = 'shop'">购物车</van-button>
-        </van-col>
-        <van-col span="6">
-          <van-button round size="small" class="routeItem" icon="manager-o" @click="item = 'user'">我</van-button>
-        </van-col>
-      </van-row>
-    </div>
-    <router-view class="content"/>
+    <!-- <van-tabbar id="tabbar" v-model="active">
+      <van-tabbar-item name="home" icon="home-o">主页</van-tabbar-item>
+      <van-tabbar-item name="shop" icon="cart-o" :info="info">购物车</van-tabbar-item>
+      <van-tabbar-item name="user" icon="manager-o" dot>我</van-tabbar-item>
+    </van-tabbar> -->
+    <bottom-tab></bottom-tab>
+    <router-view />
   </div>
-</template>
+</template> 
 
 <script>
-import { Row,Col,Button } from 'vant'
-import { Watch } from 'vue-property-decorator'
+import { Tabbar, TabbarItem } from 'vant';
+import { mapGetters, mapActions } from 'vuex';
+import BottomTab from '@/components/BottomTab'
 export default {
   components: {
-    [Row.name]: Row,
-    [Col.name]: Col,
-    [Button.name]: Button
+    [Tabbar.name]: Tabbar,
+    [TabbarItem.name]: TabbarItem,
+    BottomTab
   },
 
   data() {
     return {
-      item: 'main'
+      active: this.curPage
     }
   },
 
+  computed: {
+    ...mapGetters([
+      'goods',
+      'curPage'
+    ]),
+  },
+
   watch: {
-    item: function(val) {
-      this.$router.push('/' + val)
+    goods: {
+      handler(val) {
+        this.info = this.goods.length
+      },
+      immediate: true
+    },
+    curPage: function(val) {
+      this.active = val
+    },
+    active: function(val) {
+      this.ChangePage(val)
+      this.$router.push(this.curPage)
     }
+  },
+  
+  methods: {
+    ...mapActions([
+      'ChangePage'
+    ])
+  },
+
+  created() {
+    // this.info = this.goods.length;
   }
 }
 </script>
@@ -54,25 +72,8 @@ export default {
   overflow: hidden;
 }
 
-#nav {
-  width: 100%;
-  position: fixed;
-  z-index: 1;
-
-  button:focus {
-    color: yellow
-  }
-
-  .routeItem {
-    margin: 10px;
-    color: white;
-    background-image: linear-gradient(to right, #4bb0ff, #6149f6)
-  }
+#tabbar {
+  color: black;
+  background-image:linear-gradient(to right, #EEE8AA, #E0FFFF);
 }
-
-.content {
-  margin-top: 50px;
-  
-}
-
 </style>
